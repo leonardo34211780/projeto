@@ -51,6 +51,7 @@ void limpaDados(Matriz a){
 	}
 	free(a.dados);
 }
+
 void multiplicaMatriz(Matriz a, Matriz b){
 	if(a.i == b.j){
 		int i, j, k;
@@ -87,10 +88,26 @@ void multiplicaMatriz(Matriz a, Matriz b){
 			printf("\n");
 		}
 
+		criaArquivo(c);
 	}
 	else{
 		printf("As matrizes não pode ser multiplicadas.\n");
 		exit(EXIT_FAILURE);
 	}
 		
+}
+
+void criaArquivo(Matriz a){
+	int i, j;
+
+	FILE *arq = fopen("Produto.txt", "w");
+
+	for(i = 0; i < a.i; i++){
+		for(j = 0; j< a.j; j++){
+			fprintf(arq, "%d ", a.dados[i][j]);
+		}
+		fprintf(arq, "\n");
+	}
+
+	fclose(arq);
 }
