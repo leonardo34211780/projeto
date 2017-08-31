@@ -1,9 +1,10 @@
-#include "projeto.c"
+#include "/home/leonardo/Documentos/estudo/c/projeto/biblioteca/projeto.c"
 
 int main(){
 
-	DimensaoMatriz a;
-	DimensaoMatriz b;
+
+	Matriz a;
+	Matriz b;
 	
 	FILE *A = fopen("matriz_a.txt", "r");
 	FILE *B = fopen("matriz_b.txt", "r");
@@ -13,12 +14,13 @@ int main(){
 		exit(EXIT_FAILURE);
 	}
 	
-	a = getDimensao(A);
-	b = getDimensao(B);
+	a = getMatriz(A);
+	b = getMatriz(B);
 
-	printf("%d %d\n", a.i, a.j);
-	printf("%d %d\n", b.i, b.j);
+	multiplicaMatriz(a, b);
+	
 	fclose(A);
 	fclose(B);
+	
 	return 0;
 }
