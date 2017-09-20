@@ -6,7 +6,7 @@
 typedef struct matriz{
 	int i;
 	int j;
-	int **dados;
+	double **dados;
 } Matriz;
 
 Matriz getMatriz(FILE *arq);

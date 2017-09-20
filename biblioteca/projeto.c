@@ -33,16 +33,19 @@ Matriz getMatriz(FILE *arq){
 		
 	}
 
+	//retorna o ponteiro para o inicio do arquivo para criar a matriz
 	fseek(arq, 0, SEEK_SET);
 
 	for (i = 0; i < matriz.i; ++i){
 		for (j = 0; j < matriz.j; ++j){
-			fscanf(arq, "%d", &matriz.dados[i][j]); 
+			fscanf(arq, "%lf", &matriz.dados[i][j]); 
 		}
 	}
 
 	return matriz;
 }
+
+//função para desalocar os espaços alocados
 void limpaDados(Matriz a){
 	int i, j;
 
@@ -53,6 +56,7 @@ void limpaDados(Matriz a){
 }
 
 void multiplicaMatriz(Matriz a, Matriz b){
+	//verifica se é possível multiplicar as matrizes
 	if(a.i == b.j){
 		int i, j, k;
 
@@ -61,12 +65,12 @@ void multiplicaMatriz(Matriz a, Matriz b){
 		c.i = a.i;
 		c.j = b.j;
 
-		printf("%d %d\n", c.i, c.j);
+		
 
-		c.dados = malloc(sizeof(int*)*c.i);
+		c.dados = malloc(sizeof(double*)*c.i);
 
 		for(i = 0; i < c.i; i++){
-			c.dados[i] = malloc(sizeof(int)*c.j);
+			c.dados[i] = malloc(sizeof(double)*c.j);
 		}
 
 		for(i = 0; i < a.i; i++){
@@ -83,7 +87,7 @@ void multiplicaMatriz(Matriz a, Matriz b){
 		
 		for (i = 0; i < c.i; i++){
 			for (j = 0; j < c.j; j++){
-				printf("%d ", c.dados[i][j]);
+				printf("%lf ", c.dados[i][j]);
 			}
 			printf("\n");
 		}
@@ -97,6 +101,7 @@ void multiplicaMatriz(Matriz a, Matriz b){
 		
 }
 
+//cria o arquivo resultante do produto das matrizes
 void criaArquivo(Matriz a){
 	int i, j;
 
@@ -104,7 +109,7 @@ void criaArquivo(Matriz a){
 
 	for(i = 0; i < a.i; i++){
 		for(j = 0; j< a.j; j++){
-			fprintf(arq, "%d ", a.dados[i][j]);
+			fprintf(arq, "%lf ", a.dados[i][j]);
 		}
 		fprintf(arq, "\n");
 	}

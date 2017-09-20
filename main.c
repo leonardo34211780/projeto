@@ -1,4 +1,4 @@
-#include "/home/leonardo/Documentos/estudo/c/projeto/biblioteca/projeto.c"
+#include "./biblioteca/projeto.c"
 
 int main(){
 
