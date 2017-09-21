@@ -1,5 +1,5 @@
 #include "projeto.h"
-
+#include <string.h>
 
 Matriz getMatriz(FILE *arq){
 	Matriz matriz;
@@ -8,28 +8,47 @@ Matriz getMatriz(FILE *arq){
 	matriz.i = 0;
 	matriz.j = 0;
 
-	char c;
+	char l[10000];
 	
 	/*Percorre o arquivo verificando os caracteres presensetes, se for diferente de espaço ou salto
 	 *de linha, incrementa a coluna, se for igual a salto de linha incrementa linha.
 	*/
-	while(fscanf(arq, "%c", &c) != EOF){ 		
-		if(c != ' ' && c != '\n'){
-			matriz.j++;
+	// while(fscanf(arq, "%c", &c) != EOF){ 		
+	// 	if(c == ' '){
+	// 		matriz.j++;
+	// 	}
+	// 	else if(c == '\n'){
+	// 		matriz.i++;
+	// 	}
+	// 	if(strcmp(s, " \n") == 0){
+	// 		matriz.j--;
+	// 	}
+	// }
+
+	while(fgets(l, sizeof(l), arq) != NULL){
+		printf("%s", l);
+		for(long int i = 0; i < strlen(l); i++){
+			if(l[i] == '\t'){
+				matriz.j++;
+
+			}
+			else if(l[i] == '\n')
+				matriz.i++;
+				
 		}
-		else if(c == '\n'){
-			matriz.i++;
-		}		
 	}
-
+	
 	/*Correção do número de linhas e colunas*/
-	matriz.i += 1;
+	
+	
 	matriz.j /= matriz.i;
+	
 
-	matriz.dados = malloc(sizeof(int*)*matriz.i);
+	printf("\n%d %d\n", matriz.i, matriz.j);
+	matriz.dados = malloc(sizeof(double*)*matriz.i);
 
 	for(i = 0; i < matriz.i; i++){
-			matriz.dados[i] = malloc(sizeof(int)*matriz.j);
+			matriz.dados[i] = malloc(sizeof(double)*matriz.j);
 		
 	}
 
@@ -47,7 +66,7 @@ Matriz getMatriz(FILE *arq){
 
 //função para desalocar os espaços alocados
 void limpaDados(Matriz a){
-	int i, j;
+	int i;
 
 	for(i = 0; i < a.i; i++){
 		free(a.dados[i]);
@@ -57,7 +76,7 @@ void limpaDados(Matriz a){
 
 void multiplicaMatriz(Matriz a, Matriz b){
 	//verifica se é possível multiplicar as matrizes
-	if(a.i == b.j){
+	if(a.j == b.i){
 		int i, j, k;
 
 		Matriz c;
@@ -105,11 +124,13 @@ void multiplicaMatriz(Matriz a, Matriz b){
 void criaArquivo(Matriz a){
 	int i, j;
 
-	FILE *arq = fopen("Produto.txt", "w");
+	FILE *arq = fopen("C_hat.txt", "w");
 
+	fprintf(arq, "%d\t%d\n", a.i, a.j);
+	
 	for(i = 0; i < a.i; i++){
 		for(j = 0; j< a.j; j++){
-			fprintf(arq, "%lf ", a.dados[i][j]);
+			fprintf(arq, "%lf\t", a.dados[i][j]);
 		}
 		fprintf(arq, "\n");
 	}

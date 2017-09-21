@@ -14,4 +14,5 @@ Matriz getMatriz(FILE *arq);
 void limpaDados(Matriz a);
 
 void criaArquivo(Matriz a);
+
 #endif
