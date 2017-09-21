@@ -9,26 +9,11 @@ Matriz getMatriz(FILE *arq){
 	matriz.j = 0;
 
 	char l[10000];
-	
-	/*Percorre o arquivo verificando os caracteres presensetes, se for diferente de espaço ou salto
-	 *de linha, incrementa a coluna, se for igual a salto de linha incrementa linha.
-	*/
-	// while(fscanf(arq, "%c", &c) != EOF){ 		
-	// 	if(c == ' '){
-	// 		matriz.j++;
-	// 	}
-	// 	else if(c == '\n'){
-	// 		matriz.i++;
-	// 	}
-	// 	if(strcmp(s, " \n") == 0){
-	// 		matriz.j--;
-	// 	}
-	// }
 
 	while(fgets(l, sizeof(l), arq) != NULL){
 		printf("%s", l);
 		for(long int i = 0; i < strlen(l); i++){
-			if(l[i] == '\t'){
+			if(l[i] == '\t' || l[i] == ' '){
 				matriz.j++;
 
 			}
@@ -39,12 +24,10 @@ Matriz getMatriz(FILE *arq){
 	}
 	
 	/*Correção do número de linhas e colunas*/
-	
-	
 	matriz.j /= matriz.i;
 	
 
-	printf("\n%d %d\n", matriz.i, matriz.j);
+	
 	matriz.dados = malloc(sizeof(double*)*matriz.i);
 
 	for(i = 0; i < matriz.i; i++){
